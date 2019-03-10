@@ -2,12 +2,14 @@
 
 	public static class Const {
 
-        public const string PLAYER_NAME_KEY = "PlayerNameKey";
 
-		public const int NUM_WIDTH  = 8;
+        public const float MOVE_SPEED = 0.025f;
+
+
+		public const int NUM_WIDTH  = 16;
 		public const int NUM_HEIGHT = 8;
 
-		public const float BLOCK_SIZE = 0.64f;
+		public const float BLOCK_SIZE = 1.6f;
 		public const float BLOCK_SIZE_HALF = BLOCK_SIZE / 2.0f;
 
 		public const int GAME_END_TURN = 20;
@@ -19,14 +21,10 @@
 		public const float TURN_TIME = 30.0f;
 
 //        public static readonly UnityEngine.Color MASTER_COLOR = new UnityEngine.Color(0.0f, 255.0f, 255.0f, 1.0f);
-        public static readonly UnityEngine.Color MASTER_COLOR = new UnityEngine.Color(90.0f, 0.0f, 190.0f, 1.0f);
+        public static readonly UnityEngine.Color DEFAULT_COLOR = new UnityEngine.Color(90.0f, 0.0f, 190.0f, 1.0f);
 //        public static readonly UnityEngine.Color GUEST_COLOR  = new UnityEngine.Color(255.0f, 0.0f, 0.0f, 1.0f);
-        public static readonly UnityEngine.Color GUEST_COLOR  = new UnityEngine.Color(100.0f, 190.0f, 0.0f, 1.0f);
+        public static readonly UnityEngine.Color HOLD_COLOR  = new UnityEngine.Color(100.0f, 190.0f, 0.0f, 1.0f);
 
-		public enum PLAYER_TYPE{
-			MASTER = 1,
-			GUEST
-		}
 
 	}
 }

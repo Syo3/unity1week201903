@@ -12,6 +12,10 @@ namespace MainScene{
         private SoundManager _soundManager;
         [SerializeField, Tooltip("フェード管理")]
         private FadeManager _fadeManager;
+        [SerializeField, Tooltip("ステージ管理")]
+        private StageManager _stageManager;
+        [SerializeField, Tooltip("プレイヤー")]
+        private Player _player;
         #endregion
 
         #region private field
@@ -29,6 +33,8 @@ namespace MainScene{
         // Use this for initialization
         void Start () {
             StartCoroutine(_fadeManager.FadeIn());
+            _stageManager.Init(this);
+            _player.Init();
         }
         
         // Update is called once per frame
