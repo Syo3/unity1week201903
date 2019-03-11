@@ -14,8 +14,12 @@ namespace MainScene{
         private FadeManager _fadeManager;
         [SerializeField, Tooltip("ステージ管理")]
         private StageManager _stageManager;
-        [SerializeField, Tooltip("プレイヤー")]
-        private Player _player;
+        [SerializeField, Tooltip("ゲーム親要素")]
+        private Transform _worldParent;
+        [SerializeField, Tooltip("クリア表示")]
+        private ClearView _clearView;
+        [SerializeField, Tooltip("リトライ表示")]
+        private RetryView _retryView;
         #endregion
 
         #region private field
@@ -28,17 +32,40 @@ namespace MainScene{
         public SoundManager SoundManager{
             get{return _soundManager;}
         }
+        public StageManager StageManager{
+            get{return _stageManager;}
+        }
+        public FadeManager FadeManager{
+            get{return _fadeManager;}
+        }
+        public Transform WorldParent{
+            get{return _worldParent;}
+        }
+        public ClearView ClearView{
+            get{return _clearView;}
+        }
+        public RetryView RetryView{
+            get{return _retryView;}
+        }
         #endregion
 
         // Use this for initialization
-        void Start () {
-            StartCoroutine(_fadeManager.FadeIn());
+        void Start ()
+        {
+            // ステージ作成
             _stageManager.Init(this);
-            _player.Init();
+            _clearView.Init(this);
+            _retryView.Init(this);
+            // フェードイン
+            _fadeManager.SetCallBack(()=>{
+                _stageManager.PlayerInit();
+            });
+            StartCoroutine(_fadeManager.FadeIn());
         }
         
         // Update is called once per frame
-        void Update () {
+        void Update ()
+        {
             
         }
 
