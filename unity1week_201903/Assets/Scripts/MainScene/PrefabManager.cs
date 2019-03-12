@@ -15,6 +15,8 @@ namespace MainScene{
         private GameObject _goalPrefab;
         [SerializeField, Tooltip("ブロックプレハブ")]
         private GameObject _blockPrefab;
+        [SerializeField, Tooltip("坂ブロック")]
+        private GameObject _hillBlockPrefab;
         #endregion
 
         #region access
@@ -26,6 +28,9 @@ namespace MainScene{
         }
         public GameObject BlockPrefab{
             get{return _blockPrefab;}
+        }
+        public GameObject HillBlockPrefab{
+            get{return _hillBlockPrefab;}
         }
         #endregion
     }

@@ -10,6 +10,12 @@ TextureImporter:
     21300010: game_sprite01_5
     21300012: game_sprite01_6
     21300014: game_sprite01_7
+    21300016: game_sprite01_8
+    21300018: game_sprite01_9
+    21300020: game_sprite01_10
+    21300022: game_sprite01_11
+    21300024: game_sprite01_12
+    21300026: game_sprite01_13
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
@@ -137,7 +143,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 313e1433f389a48aaa92f0d315544210
+      spriteID: 6ebc60589673c42cd91ce4bacd008e41
       vertices: []
       indices: 
       edges: []
@@ -157,7 +163,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 768883aa7596746fdaa185c118f933c9
+      spriteID: 0976986a9dec74485b952ce69f5c4cdb
       vertices: []
       indices: 
       edges: []
@@ -177,7 +183,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d4b342c93df9d4f05b71274b8cebb1f9
+      spriteID: bb0110a503103430a90e7421916f988e
       vertices: []
       indices: 
       edges: []
@@ -197,7 +203,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ef3146281cfe4b288e7cdda3f08487e
+      spriteID: 65d4fd6f444224899ad411d15bb23cc0
       vertices: []
       indices: 
       edges: []
@@ -217,7 +223,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ef36d6945bd94d628446dcb7a34da89
+      spriteID: a258fb92886cc4249aca8d2cec4f2b67
       vertices: []
       indices: 
       edges: []
@@ -237,7 +243,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 57d199936325a4e61a1e21776490d75e
+      spriteID: fa23673975fc9474d9beb9b890bf993b
       vertices: []
       indices: 
       edges: []
@@ -257,7 +263,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 50c0d557d259c42a4827224739819950
+      spriteID: 048ab8088969e479699f354acd71e197
       vertices: []
       indices: 
       edges: []
@@ -277,7 +283,127 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5e0a8d97f43a440b48e9024b00bfa212
+      spriteID: 1cea85a7aeb644938a32ebc1d106c946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_sprite01_8
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f57f6c888c1004a3fa0642deafc7f008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_sprite01_9
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a956182730a34b28acb44f07f7c92ca
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_sprite01_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4034afcbc13c84d0e849d08455209972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_sprite01_11
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a47d7323b351342f894b1ef28459476d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_sprite01_12
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d4a6882fd69f4500a187efdd2b3afe1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_sprite01_13
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 573d81e6ba241404d860e8b6c21d3ba0
       vertices: []
       indices: 
       edges: []

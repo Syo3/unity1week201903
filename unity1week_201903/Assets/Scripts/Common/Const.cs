@@ -28,7 +28,9 @@
         public enum ObjectType{
             kPlayer = 1,
             kGoal,
-            kBlock            
+            kBlock,
+            kFixedBlock,
+            kHillBlock
         }
 	}
 }

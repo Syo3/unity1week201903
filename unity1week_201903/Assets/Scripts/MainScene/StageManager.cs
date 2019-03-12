@@ -147,6 +147,15 @@ namespace MainScene{
                     block.Init(this);
                     _blockList.Add(block);
                     break;
+                // 坂ブロック
+                case Common.Const.ObjectType.kHillBlock:
+                    var hillBlock                     = Instantiate(_mainSceneManager.PrefabManager.HillBlockPrefab, Vector3.zero, Quaternion.identity, _mainSceneManager.WorldParent).GetComponent<HillBlock>();
+                    Debug.Log(hillBlock);
+                    hillBlock.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
+
+                    hillBlock.Init(this);
+                    _blockList.Add(hillBlock);
+                    break;
                 }
                 _stageMapList[_stageData[i]._posY][_stageData[i]._posX] = (int)_stageData[i]._type;
             }
@@ -178,7 +187,19 @@ namespace MainScene{
                     return;
                 }
             }
-            _mainSceneManager.RetryView.Show(true);
+            //_mainSceneManager.RetryView.Show(true);
+            // フェード
+            _mainSceneManager.FadeManager.SetCallBack(()=>{
+                // ステージ初期化
+                _mainSceneManager.StageManager.Reset();
+                _mainSceneManager.FadeManager.SetCallBack(()=>{
+                    _mainSceneManager.StageManager.PlayerInit();
+                });
+                StartCoroutine(_mainSceneManager.FadeManager.FadeIn());
+            });
+            StartCoroutine(_mainSceneManager.FadeManager.FadeOut());
+
+
             _failedFlg = true;
         }
     }
