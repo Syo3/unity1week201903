@@ -30,7 +30,9 @@
             kGoal,
             kBlock,
             kFixedBlock,
-            kHillBlock
+            kHillBlock,
+            kHillBlockRight,
+            kSpring
         }
 	}
 }

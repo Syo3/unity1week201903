@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace MainScene{
     public class Goal : BlockBase {
@@ -14,10 +15,11 @@ namespace MainScene{
         /// 初期設定
         /// </summary>
         /// <param name="stageManager"></param>
-        public void Init(StageManager stageManager)
+        public void Init(StageManager stageManager, float animationTime)
         {
-            _goalFlg = false;
-            base.Init(stageManager);
+            _goalFlg    = false;
+            _objectType = Common.Const.ObjectType.kGoal;
+            base.Init(stageManager, animationTime);
         }
         #endregion
 
@@ -35,5 +37,14 @@ namespace MainScene{
             _goalFlg = true;
         }
 
+        /// <summary>
+        /// ドラッグ
+        /// </summary>
+        /// <param name="eventData"></param>
+        public void OnDrag(PointerEventData eventData)
+        {
+            // 振動させるとか
+            // 動かせない演出
+        }
     }
 }

@@ -6,6 +6,12 @@ using UnityEngine.EventSystems;
 namespace MainScene{
     public class FixedBlock : BlockBase {
 
+        public void Init(StageManager stageManager, float animationTime=0.0f)
+        {
+            _objectType = Common.Const.ObjectType.kFixedBlock;
+            base.Init(stageManager);
+        }
+
         /// <summary>
         /// ドラッグ
         /// </summary>

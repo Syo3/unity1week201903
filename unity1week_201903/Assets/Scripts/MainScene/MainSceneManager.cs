@@ -56,9 +56,9 @@ namespace MainScene{
             _stageManager.Init(this);
             _clearView.Init(this);
             _retryView.Init(this);
+            _stageManager.PlayerInit();
             // フェードイン
             _fadeManager.SetCallBack(()=>{
-                _stageManager.PlayerInit();
             });
             StartCoroutine(_fadeManager.FadeIn());
         }

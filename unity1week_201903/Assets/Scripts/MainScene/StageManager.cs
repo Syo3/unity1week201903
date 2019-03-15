@@ -55,8 +55,11 @@ namespace MainScene{
         public void StageClear()
         {
             ++_stageID;
-            _mainSceneManager.ClearView.Show(true);
+            _mainSceneManager.ClearView.Show(true);            
+            Invoke("ObjectFall", 1.0f);
         }
+
+
 
         /// <summary>
         /// ゴールカウントアップ
@@ -123,6 +126,7 @@ namespace MainScene{
         {
             _targetGoalCnt = StageDataManaer.GetStageGoalCnt(_stageID);
             _stageData     = StageDataManaer.GetStageData(_stageID);
+            var blockCnt   = 0;
             for(var i = 0; i < _stageData.Count; ++i){
 
                 Debug.Log(_stageData[i]._type);
@@ -137,25 +141,44 @@ namespace MainScene{
                 case Common.Const.ObjectType.kGoal:
                     var goal                     = Instantiate(_mainSceneManager.PrefabManager.GoalPrefab, Vector3.zero, Quaternion.identity, _mainSceneManager.WorldParent).GetComponent<Goal>();
                     goal.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
-                    goal.Init(this);
+                    goal.Init(this, 0.1f * blockCnt);
                     _blockList.Add(goal);
+                    ++blockCnt;
                     break;
                 // ブロック
                 case Common.Const.ObjectType.kBlock:
                     var block                     = Instantiate(_mainSceneManager.PrefabManager.BlockPrefab, Vector3.zero, Quaternion.identity, _mainSceneManager.WorldParent).GetComponent<BlockBase>();
                     block.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
-                    block.Init(this);
+                    block.Init(this, 0.1f * blockCnt);
                     _blockList.Add(block);
+                    ++blockCnt;
                     break;
                 // 坂ブロック
                 case Common.Const.ObjectType.kHillBlock:
                     var hillBlock                     = Instantiate(_mainSceneManager.PrefabManager.HillBlockPrefab, Vector3.zero, Quaternion.identity, _mainSceneManager.WorldParent).GetComponent<HillBlock>();
-                    Debug.Log(hillBlock);
                     hillBlock.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
-
-                    hillBlock.Init(this);
+                    hillBlock.Init(this, 0.1f * blockCnt);
                     _blockList.Add(hillBlock);
+                    ++blockCnt;
                     break;
+                // 坂ブロック　右
+                case Common.Const.ObjectType.kHillBlockRight:
+                    var hillBlockRight                     = Instantiate(_mainSceneManager.PrefabManager.HillBlockRightPrefab, Vector3.zero, Quaternion.identity, _mainSceneManager.WorldParent).GetComponent<HillBlock>();
+                    hillBlockRight.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
+                    hillBlockRight.Init(this, 0.1f * blockCnt);
+                    _blockList.Add(hillBlockRight);
+                    ++blockCnt;
+                    break;
+                // スプリング
+                case Common.Const.ObjectType.kSpring:
+                    var spring                     = Instantiate(_mainSceneManager.PrefabManager.SpringPrefab, Vector3.zero, Quaternion.identity, _mainSceneManager.WorldParent).GetComponent<Spring>();
+                    spring.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
+                    spring.Init(this, 0.1f * blockCnt);
+                    _blockList.Add(spring);
+                    ++blockCnt;
+                    break;
+
+                
                 }
                 _stageMapList[_stageData[i]._posY][_stageData[i]._posX] = (int)_stageData[i]._type;
             }
@@ -177,7 +200,6 @@ namespace MainScene{
         /// </summary>
         private void CheckPlayerFall()
         {
-            Debug.Log(_failedFlg);
             if(_failedFlg){
                 return;
             }
@@ -201,6 +223,34 @@ namespace MainScene{
 
 
             _failedFlg = true;
+        }
+
+        private void ObjectFall()
+        {
+            for(var i = 0; i < _blockList.Count; ++i){
+                _blockList[i].SetFall();
+            }
+            StartCoroutine(FallCheckCoroutine());
+        }
+
+        private IEnumerator FallCheckCoroutine()
+        {
+            var fallFlg = true;
+            while(fallFlg){
+
+                yield return null;
+                fallFlg = false;
+                for(var i = 0; i < _blockList.Count; ++i){
+
+                    if(_blockList[i].FallFlg == true){
+                        fallFlg = true;
+                        break;
+                    }
+                }
+            }
+            Reset();
+            PlayerInit();
+            _mainSceneManager.ClearView.Show(false);
         }
     }
 }

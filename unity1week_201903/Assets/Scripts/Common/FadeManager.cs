@@ -40,7 +40,7 @@ public class FadeManager : MonoBehaviour {
             color.a         += kFadeSpeed;
             _fadeImage.color = color;
         }
-        _fadeImage.color = Color.black;
+        _fadeImage.color = Color.white;
         if(_callback != null){
             _callback();
         }
@@ -59,7 +59,7 @@ public class FadeManager : MonoBehaviour {
             color.a         -= kFadeSpeed;
             _fadeImage.color = color;
         }
-        _fadeImage.color = Color.clear;
+//        _fadeImage.color = ;
         if(_callback != null){
             _callback();
         }
