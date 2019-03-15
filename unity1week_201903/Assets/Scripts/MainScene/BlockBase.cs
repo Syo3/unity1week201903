@@ -21,7 +21,10 @@ namespace MainScene{
         protected Common.Const.ObjectType _objectType;
         protected StageManager _stageManager;
         protected bool _moveFlg;
+        protected bool _fixedFlg;
         protected bool _fallFlg;
+        protected int  _posX;
+        protected int  _posY;
         #endregion
 
         #region access
@@ -36,6 +39,8 @@ namespace MainScene{
         void Awake()
         {
             _objectType = Common.Const.ObjectType.kBlock;
+            _moveFlg    = true;
+            _fixedFlg   = false;
         }
 
         #region public function
@@ -46,8 +51,9 @@ namespace MainScene{
         public void Init(StageManager stageManager, float animationTime=0.0f)
         {
             _stageManager = stageManager;
-            _moveFlg      = true;
-
+            var pos       = transform.localPosition;
+            _posX         = (int)((pos.x - Common.Const.START_POS_X) / Common.Const.BLOCK_SIZE);
+            _posY         = (int)((pos.y - Common.Const.START_POS_Y) / Common.Const.BLOCK_SIZE);
             Invoke("AnimationPlay", animationTime);
         }
 
@@ -83,6 +89,9 @@ namespace MainScene{
         #region 継承 function
         public void OnBeginDrag(PointerEventData eventData)
         {
+            if(!_moveFlg || _fixedFlg){
+                return;
+            }
             _sprite.sortingOrder = 2;
             _sprite.color        = new Color(0.8f, 0.8f, 0.8f, 1.0f);
         }
@@ -93,26 +102,51 @@ namespace MainScene{
         /// <param name="eventData"></param>
         public void OnDrag(PointerEventData eventData)
         {
-            if(!_moveFlg){
+            if(!_moveFlg || _fixedFlg){
+                StartCoroutine(MoveFalseAnimation());
                 return;
             }
             // マウスの位置に動かす
             var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Debug.Log((int)((pos.x - Common.Const.START_POS_X) / Common.Const.BLOCK_SIZE));
-            Debug.Log((int)((pos.x) / Common.Const.BLOCK_SIZE));
-            pos.x   = (float)(int)((pos.x - Common.Const.START_POS_X) / Common.Const.BLOCK_SIZE) * Common.Const.BLOCK_SIZE + Common.Const.START_POS_X + Common.Const.BLOCK_SIZE_HALF;
-//            pos.x   = (float)(int)((pos.x + Common.Const.BLOCK_SIZE_HALF) / Common.Const.BLOCK_SIZE) * Common.Const.BLOCK_SIZE - Common.Const.BLOCK_SIZE_HALF;
-//            pos.y   = (float)(int)((pos.y - Common.Const.BLOCK_SIZE_HALF) / Common.Const.BLOCK_SIZE) * Common.Const.BLOCK_SIZE + Common.Const.BLOCK_SIZE_HALF;
-            pos.y   = (float)(int)((pos.y - Common.Const.START_POS_Y) / Common.Const.BLOCK_SIZE) * Common.Const.BLOCK_SIZE + Common.Const.START_POS_Y + Common.Const.BLOCK_SIZE_HALF;
             pos.z   = 0;
+            var x   = (int)((pos.x - Common.Const.START_POS_X) / Common.Const.BLOCK_SIZE);
+            var y   = (int)((pos.y - Common.Const.START_POS_Y) / Common.Const.BLOCK_SIZE);
+            pos.x   = (float)x * Common.Const.BLOCK_SIZE + Common.Const.START_POS_X + Common.Const.BLOCK_SIZE_HALF;
+            pos.y   = (float)y * Common.Const.BLOCK_SIZE + Common.Const.START_POS_Y + Common.Const.BLOCK_SIZE_HALF;
+            // そこに置けるか確認する処理
+            Debug.Log((_posX != x || _posY != y)+"_"+_posX+"="+x+"_"+_posY+"="+y);
+            if((_posX != x || _posY != y) && !_stageManager.CheckStageMap(x, y)){
+                _sprite.color = new Color(1.0f, 0.8f, 0.8f, 1.0f);
+            }
+            else{
+                _sprite.color = new Color(0.8f, 0.8f, 0.8f, 1.0f);
+            }
             transform.position = pos;
         }
 
+        /// <summary>
+        /// ドラッグ終了
+        /// </summary>
+        /// <param name="eventData"></param>
         public void OnEndDrag(PointerEventData eventData)
         {
+            if(!_moveFlg || _fixedFlg){
+                return;
+            }
             _sprite.sortingOrder = 1;
             _sprite.color        = Color.white;
-
+            // そこに置けるか確認する処理
+            var pos      = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var x        = (int)((pos.x - Common.Const.START_POS_X) / Common.Const.BLOCK_SIZE);
+            var y        = (int)((pos.y - Common.Const.START_POS_Y) / Common.Const.BLOCK_SIZE);
+            var position = Vector3.zero;
+            if(_stageManager.CheckStageMap(x, y)){
+                _stageManager.SetStageMap(_posX, _posY, x, y);
+                _posX = x;
+                _posY = y;               
+            }
+            position                = new Vector3((float)_posX * Common.Const.BLOCK_SIZE + Common.Const.START_POS_X + Common.Const.BLOCK_SIZE_HALF, (float)_posY * Common.Const.BLOCK_SIZE + Common.Const.START_POS_Y + Common.Const.BLOCK_SIZE_HALF, 0.0f);
+            transform.localPosition = position;
         }
 
         /// <summary>
@@ -139,7 +173,7 @@ namespace MainScene{
         /// <param name="collision"></param>
         protected void OnCollisionStay2D(Collision2D collision)
         {
-            // 移動可能か判定
+            // 移動可能か判定 上方向にプレイヤーがイルカ
             _moveFlg = collision.transform.position.y > transform.position.y + _sprite.size.y / 2.0f ? false : true;
         }
 
@@ -166,5 +200,21 @@ namespace MainScene{
             }
         }
 
+        private IEnumerator MoveFalseAnimation()
+        {
+            var basePosition = transform.localPosition;
+            Debug.Log(basePosition);
+            for(var i = 0; i < 5; ++i){
+
+                transform.localPosition = basePosition + new Vector3(Random.Range(-0.05f, 0.05f), Random.Range(-0.05f, 0.05f), 0.0f);
+                yield return null;
+            }
+            var pos = Vector3.zero;
+            pos.x   = (float)_posX * Common.Const.BLOCK_SIZE + Common.Const.START_POS_X + Common.Const.BLOCK_SIZE_HALF;
+            pos.y   = (float)_posY * Common.Const.BLOCK_SIZE + Common.Const.START_POS_Y + Common.Const.BLOCK_SIZE_HALF;
+            transform.localPosition = pos;
+            Debug.Log(basePosition);
+
+        }
     }
 }

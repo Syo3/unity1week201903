@@ -20,6 +20,7 @@ namespace TitleScene{
                 _fadeManager.SetCallBack(()=>{
                     UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
                 });
+                StartCoroutine(_fadeManager.FadeOut());
             });
             StartCoroutine(_fadeManager.FadeIn());
         }

@@ -16,6 +16,7 @@ namespace MainScene{
         }
         private readonly float kCheckTime = 1.0f;
         private readonly float kRotateSpeed = 180.0f;
+        private readonly float kRollingStartRot = 20.0f;
         #endregion
 
 
@@ -153,6 +154,12 @@ namespace MainScene{
                 case Common.Const.ObjectType.kSpring:
                     _rigidBody.AddForce(new Vector2(0.0f, 500.0f));
                     break;
+                case Common.Const.ObjectType.kSpringLeft:
+                    _rigidBody.AddForce(new Vector2(200.0f, 400.0f));
+                    break;
+                case Common.Const.ObjectType.kSpringRight:
+                    _rigidBody.AddForce(new Vector2(-200.0f, 400.0f));
+                    break;
                 }
                 break;
             }
@@ -220,13 +227,13 @@ namespace MainScene{
 
         private void RollingCheck()
         {
-            if(_transform.eulerAngles.z > 20.0f || _transform.eulerAngles.z < -20.0f){
+            var checkAngle = Mathf.Abs(_transform.eulerAngles.z) % 360;
+            if(checkAngle > kRollingStartRot && checkAngle < 360.0f-kRollingStartRot){
+                Debug.Log(_transform.eulerAngles.z);
                 _boxCollider2D.enabled    = false;
                 _circleCollider2D.enabled = true;
                 _state                    = State.kRolling;
                 _animator.Play("Rolling");
-                                Debug.Log(_state);
-
             }
         }
 

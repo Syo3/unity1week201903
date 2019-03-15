@@ -8,6 +8,7 @@ namespace MainScene{
 
         #region private field
         private bool _goalFlg;
+        private Vector3 _defaultPosition;
         #endregion
 
         #region public function
@@ -17,8 +18,10 @@ namespace MainScene{
         /// <param name="stageManager"></param>
         public void Init(StageManager stageManager, float animationTime)
         {
+            _moveFlg    = false;
             _goalFlg    = false;
             _objectType = Common.Const.ObjectType.kGoal;
+            _defaultPosition = transform.localPosition;
             base.Init(stageManager, animationTime);
         }
         #endregion
@@ -35,16 +38,6 @@ namespace MainScene{
             Debug.Log("Clear");
             _stageManager.AddGoalCnt();
             _goalFlg = true;
-        }
-
-        /// <summary>
-        /// ドラッグ
-        /// </summary>
-        /// <param name="eventData"></param>
-        public void OnDrag(PointerEventData eventData)
-        {
-            // 振動させるとか
-            // 動かせない演出
         }
     }
 }

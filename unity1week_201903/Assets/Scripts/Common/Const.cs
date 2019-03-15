@@ -3,7 +3,7 @@
 	public static class Const {
 
 
-        public const float MOVE_SPEED = 0.5f;
+        public const float MOVE_SPEED = 1.0f;
 
 
 		public const int NUM_WIDTH  = 9;
@@ -32,7 +32,13 @@
             kFixedBlock,
             kHillBlock,
             kHillBlockRight,
-            kSpring
+            kSpring,
+            kFallBlock,
+
+            kSpringLeft,
+            kSpringRight,
+            kFixedHillBlockLeft,
+            kFixedHillBlockRight,
         }
 	}
 }

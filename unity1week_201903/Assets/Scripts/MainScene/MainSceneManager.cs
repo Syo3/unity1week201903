@@ -20,6 +20,8 @@ namespace MainScene{
         private ClearView _clearView;
         [SerializeField, Tooltip("リトライ表示")]
         private RetryView _retryView;
+        [SerializeField, Tooltip("クリア表示")]
+        private GameClearView _gameClearView;
         #endregion
 
         #region private field
@@ -47,6 +49,9 @@ namespace MainScene{
         public RetryView RetryView{
             get{return _retryView;}
         }
+        public GameClearView GameClearView{
+            get{return _gameClearView;}
+        }
         #endregion
 
         // Use this for initialization
@@ -56,6 +61,7 @@ namespace MainScene{
             _stageManager.Init(this);
             _clearView.Init(this);
             _retryView.Init(this);
+            _gameClearView.Init(this);
             _stageManager.PlayerInit();
             // フェードイン
             _fadeManager.SetCallBack(()=>{

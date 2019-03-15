@@ -103,6 +103,17 @@ namespace MainScene{
             }
         }
 
+        public bool CheckStageMap(int x, int y)
+        {
+            return _stageMapList[y][x] == 0;
+        }
+
+        public void SetStageMap(int beforeX, int beforeY, int afterX, int afterY)
+        {
+            _stageMapList[beforeY][beforeX] = 0;
+            _stageMapList[afterY][afterX]   = 1;
+        }
+
         /// <summary>
         /// データ削除
         /// </summary>
@@ -127,6 +138,12 @@ namespace MainScene{
             _targetGoalCnt = StageDataManaer.GetStageGoalCnt(_stageID);
             _stageData     = StageDataManaer.GetStageData(_stageID);
             var blockCnt   = 0;
+            // ゲームくりあ
+            Debug.Log(_stageData.Count);
+            if(_stageData.Count == 0){
+                _mainSceneManager.GameClearView.Show(true);
+            }
+            // ステージ生成
             for(var i = 0; i < _stageData.Count; ++i){
 
                 Debug.Log(_stageData[i]._type);
@@ -143,7 +160,6 @@ namespace MainScene{
                     goal.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
                     goal.Init(this, 0.1f * blockCnt);
                     _blockList.Add(goal);
-                    ++blockCnt;
                     break;
                 // ブロック
                 case Common.Const.ObjectType.kBlock:
@@ -151,7 +167,6 @@ namespace MainScene{
                     block.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
                     block.Init(this, 0.1f * blockCnt);
                     _blockList.Add(block);
-                    ++blockCnt;
                     break;
                 // 坂ブロック
                 case Common.Const.ObjectType.kHillBlock:
@@ -159,15 +174,13 @@ namespace MainScene{
                     hillBlock.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
                     hillBlock.Init(this, 0.1f * blockCnt);
                     _blockList.Add(hillBlock);
-                    ++blockCnt;
                     break;
                 // 坂ブロック　右
                 case Common.Const.ObjectType.kHillBlockRight:
-                    var hillBlockRight                     = Instantiate(_mainSceneManager.PrefabManager.HillBlockRightPrefab, Vector3.zero, Quaternion.identity, _mainSceneManager.WorldParent).GetComponent<HillBlock>();
+                    var hillBlockRight                     = Instantiate(_mainSceneManager.PrefabManager.HillBlockRightPrefab, Vector3.zero, Quaternion.Euler(0.0f ,180.0f, 0.0f), _mainSceneManager.WorldParent).GetComponent<HillBlock>();
                     hillBlockRight.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
                     hillBlockRight.Init(this, 0.1f * blockCnt);
                     _blockList.Add(hillBlockRight);
-                    ++blockCnt;
                     break;
                 // スプリング
                 case Common.Const.ObjectType.kSpring:
@@ -175,12 +188,41 @@ namespace MainScene{
                     spring.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
                     spring.Init(this, 0.1f * blockCnt);
                     _blockList.Add(spring);
-                    ++blockCnt;
+                    break;
+                // 固定ブロック
+                case Common.Const.ObjectType.kFixedBlock:
+                    var fixedBlock                     = Instantiate(_mainSceneManager.PrefabManager.FixedBlockPrefab, Vector3.zero, Quaternion.identity, _mainSceneManager.WorldParent).GetComponent<FixedBlock>();
+                    fixedBlock.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
+                    fixedBlock.Init(this, 0.1f * blockCnt);
+                    _blockList.Add(fixedBlock);
+                    break;
+                // 落下ブロック
+                case Common.Const.ObjectType.kFallBlock:
+                    var fallBlock                      = Instantiate(_mainSceneManager.PrefabManager.FallBlockPrefab, Vector3.zero, Quaternion.identity, _mainSceneManager.WorldParent).GetComponent<FallBlock>();
+                    fallBlock.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
+                    fallBlock.Init(this, 0.1f * blockCnt);
+                    _blockList.Add(fallBlock);
                     break;
 
-                
+                // スプリング左
+                case Common.Const.ObjectType.kSpringLeft:
+                    var springLeft                    = Instantiate(_mainSceneManager.PrefabManager.SpringLeftPrefab, Vector3.zero, Quaternion.identity, _mainSceneManager.WorldParent).GetComponent<SpringHorizontal>();
+                    springLeft.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
+                    springLeft.Init(this, 0.1f * blockCnt);
+                    _blockList.Add(springLeft);
+                    break;
+                // スプリング右
+                case Common.Const.ObjectType.kSpringRight:
+                    var springRight                     = Instantiate(_mainSceneManager.PrefabManager.SpringRightPrefab, Vector3.zero, Quaternion.Euler(0.0f ,180.0f, 0.0f), _mainSceneManager.WorldParent).GetComponent<SpringHorizontal>();
+                    springRight.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
+                    springRight.Init(this, 0.1f * blockCnt);
+                    _blockList.Add(springRight);
+                    break;
                 }
-                _stageMapList[_stageData[i]._posY][_stageData[i]._posX] = (int)_stageData[i]._type;
+                if(_stageData[i]._type != Common.Const.ObjectType.kPlayer){
+                    ++blockCnt;
+                    _stageMapList[_stageData[i]._posY][_stageData[i]._posX] = (int)_stageData[i]._type;
+                }
             }
         }
 

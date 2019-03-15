@@ -22,7 +22,16 @@ namespace MainScene{
         [SerializeField, Tooltip("スプリング")]
         private GameObject _springPrefab;
 
+        [SerializeField, Tooltip("固定ブロック")]
+        private GameObject _fixedBlockPrefab;
+        [SerializeField, Tooltip("落下ブロック")]
+        private GameObject _fallBlockPrefab;
+        [SerializeField, Tooltip("ばね左側")]
+        private GameObject _springLeftPrefab;
+        [SerializeField, Tooltip("ばね右側")]
+        private GameObject _springRightPrefab;
         #endregion
+
 
         #region access
         public GameObject PlayerPrefab{
@@ -42,6 +51,18 @@ namespace MainScene{
         }
         public GameObject SpringPrefab{
             get{return _springPrefab;}
+        }
+        public GameObject FixedBlockPrefab{
+            get{return _fixedBlockPrefab;}
+        }
+        public GameObject FallBlockPrefab{
+            get{return _fallBlockPrefab;}
+        }
+        public GameObject SpringLeftPrefab{
+            get{return _springLeftPrefab;}
+        }
+        public GameObject SpringRightPrefab{
+            get{return _springRightPrefab;}
         }
         #endregion
     }
