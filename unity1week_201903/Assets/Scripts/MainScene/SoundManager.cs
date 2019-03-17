@@ -20,6 +20,17 @@ namespace MainScene{
             }
             _audioSource.PlayOneShot(_seList[seID]);
         }
+
+        public void PlayBgm()
+        {
+            _audioSource.Play();
+        }
+
+        public void StopBgm()
+        {
+                        _audioSource.Stop();
+
+        }
         #endregion
     }
 }

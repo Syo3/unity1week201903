@@ -49,7 +49,6 @@ namespace MainScene{
         private float _time;
         private Vector3 _defaultPosition;
         private float _moveVecRate;
-
     	public Vector2 _velocity;
     	public float _angularVelocity;
         #endregion
@@ -262,7 +261,12 @@ namespace MainScene{
                 _ballonAnimator.Play("BallonDestroy");
                 _ballonAnimator.transform.parent = _transform.parent;
                 Invoke("BallonDestroy", 5.0f);
-                _stageManager.SceneManager.TutorialView.EndTutorial();
+                Debug.Log(_stageManager);
+                Debug.Log(_stageManager.SceneManager);
+                Debug.Log(_stageManager.SceneManager.TutorialView);
+                if(_stageManager.SceneManager.TutorialView != null){
+                    _stageManager.SceneManager.TutorialView.EndTutorial();
+                }
                 break;
             }
         }

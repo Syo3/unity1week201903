@@ -15,6 +15,14 @@ namespace TitleScene{
         private Character _character;
         [SerializeField, Tooltip("CanvasGroup")]
         private CanvasGroup _canvasGroup;
+        [SerializeField, Tooltip("サウンド管理")]
+        private MainScene.SoundManager _soundManager;
+        #endregion
+
+        #region access
+        public MainScene.SoundManager SoundManager{
+            get{return _soundManager;}
+        }
         #endregion
 
         // Use this for initialization
@@ -22,6 +30,7 @@ namespace TitleScene{
         {
             _character.Init(this);
             _startButton.onClick.AddListener(()=>{
+                _soundManager.PlayOnShot(2);
                 // _fadeManager.SetCallBack(()=>{
                 //     UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
                 // });
@@ -34,6 +43,6 @@ namespace TitleScene{
             StartCoroutine(_fadeManager.FadeIn());
         }
         
-        
+
     }
 }

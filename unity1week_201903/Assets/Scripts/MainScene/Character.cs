@@ -1,18 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace MainScene{
-    public class Goal : BlockBase {
-
-        [SerializeField, Tooltip("クリア画像")]
-        private Sprite _clearImage;
-
-        #region private field
-        private bool _goalFlg;
-        private Vector3 _defaultPosition;
-        #endregion
+    public class Character : BlockBase {
 
         #region public function
         /// <summary>
@@ -23,9 +14,7 @@ namespace MainScene{
         {
             _moveFlg    = false;
             _fixedFlg   = true;
-            _goalFlg    = false;
             _objectType = Common.Const.ObjectType.kGoal;
-            _defaultPosition = transform.localPosition;
             base.Init(stageManager, animationTime);
         }
         #endregion
@@ -36,13 +25,11 @@ namespace MainScene{
         /// <param name="other"></param>
         protected void OnTriggerEnter2D(Collider2D other)
         {
-            if(_goalFlg){
-                return;
-            }
-            _animator.enabled = false;
-            _sprite.sprite    = _clearImage;
+            _rigidBody.bodyType = RigidbodyType2D.Dynamic;
+            _rigidBody.AddForce(new Vector2(20.0f, 30.0f));
+            _animator.enabled   = false;
             _stageManager.AddGoalCnt();
-            _goalFlg = true;
         }
+
     }
 }

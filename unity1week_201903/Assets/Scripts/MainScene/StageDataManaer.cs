@@ -221,7 +221,71 @@ namespace MainScene{
                 stageData.Add(new StageData(Common.Const.ObjectType.kFixedFallBlock, 4, 3));
                 stageData.Add(new StageData(Common.Const.ObjectType.kBlock, 1, 3));
                 break;
+
+            case 17:
+                stageData.Add(new StageData(Common.Const.ObjectType.kPlayer, 1, 2));
+                stageData.Add(new StageData(Common.Const.ObjectType.kGoal, 1, 4));
+                stageData.Add(new StageData(Common.Const.ObjectType.kSpring, 4, 2));
+                stageData.Add(new StageData(Common.Const.ObjectType.kBlock, 3, 2));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 1, 1));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 2, 1));
+                stageData.Add(new StageData(Common.Const.ObjectType.kBlock, 4, 3));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 1, 3));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 0, 4));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 2, 3));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 5, 3));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 6, 3));
+                break;
+            case 18:
+                stageData.Add(new StageData(Common.Const.ObjectType.kGoal, 5, 1));
+                stageData.Add(new StageData(Common.Const.ObjectType.kPlayer, 1, 5));
+                stageData.Add(new StageData(Common.Const.ObjectType.kPlayer, 0, 2));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 1, 4));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 0, 1));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 5, 2));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 4, 1));
+                stageData.Add(new StageData(Common.Const.ObjectType.kGoal, 4, 2));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedFallBlock, 2, 4));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 2, 1));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 4, 3));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 5, 0));
+                stageData.Add(new StageData(Common.Const.ObjectType.kBlock, 6, 2));
+                stageData.Add(new StageData(Common.Const.ObjectType.kSpringRight, 3, 4));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFallBlock, 1, 1));
+                break;
+            case 19:
+                stageData.Add(new StageData(Common.Const.ObjectType.kCharacter, 5, 1));
+                stageData.Add(new StageData(Common.Const.ObjectType.kPlayer, 1, 1));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 1, 0));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedFallBlock, 2, 0));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 4, 0));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 5, 0));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 6, 0));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedFallBlock, 3, 0));
+                break;
+            case 20:
+                stageData.Add(new StageData(Common.Const.ObjectType.kPlayer, 0, 5));
+                stageData.Add(new StageData(Common.Const.ObjectType.kGoal, 5, 4));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 0, 4));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedFallBlock, 1, 4));
+                stageData.Add(new StageData(Common.Const.ObjectType.kBlock, 4, 5));
+                stageData.Add(new StageData(Common.Const.ObjectType.kHillBlockRight, 6, 1));
+                stageData.Add(new StageData(Common.Const.ObjectType.kHillBlockRight, 6, 0));
+                stageData.Add(new StageData(Common.Const.ObjectType.kGoal, 0, 1));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 0, 0));
+                stageData.Add(new StageData(Common.Const.ObjectType.kBlock, 6, 4));
+                stageData.Add(new StageData(Common.Const.ObjectType.kSpringLeft, 3, 5));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 5, 3));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFallBlock, 4, 0));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 1, 0));
+                stageData.Add(new StageData(Common.Const.ObjectType.kBlock, 2, 4));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 7, 3));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 4, 2));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 3, 2));
+                stageData.Add(new StageData(Common.Const.ObjectType.kFixedBlock, 2, 3));
+                break;
             }
+
             return stageData;
         }
 
@@ -230,6 +294,8 @@ namespace MainScene{
             var goalCnt = 0;
             switch(stageID){
             case 16:
+            case 18:
+            case 20:
                 goalCnt = 2;
                 break;
             default:

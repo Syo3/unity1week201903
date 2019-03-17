@@ -85,8 +85,9 @@ namespace MainScene{
             _pauseView.Init(this);
             _stageManager.PlayerInit();
             // フェードイン
-            //_fadeManager.SetCallBack(()=>{
-            //});
+            _fadeManager.SetCallBack(()=>{
+                _soundManager.PlayBgm();
+            });
             StartCoroutine(_fadeManager.FadeIn());
         }
         

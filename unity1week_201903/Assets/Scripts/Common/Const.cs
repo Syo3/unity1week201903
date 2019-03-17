@@ -40,6 +40,7 @@
             kFixedHillBlockLeft,
             kFixedHillBlockRight,
             kFixedFallBlock,
+            kCharacter,
         }
 	}
 }

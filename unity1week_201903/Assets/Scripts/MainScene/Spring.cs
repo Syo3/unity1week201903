@@ -23,7 +23,8 @@ namespace MainScene{
             _stageManager.SceneManager.SoundManager.PlayOnShot(1);
 
             // アニメーションさせる
-            _animator.Play("SpringUp");
+
+            _animator.Play("SpringUp", 0, 0.0f);
         }
 
     }

@@ -27,10 +27,12 @@ namespace MainScene{
                 _sceneManager.FadeManager.SetCallBack(()=>{
                     // ステージ初期化
                     _sceneManager.StageManager.Reset();
-                    _sceneManager.FadeManager.SetCallBack(()=>{
-                        _sceneManager.StageManager.PlayerInit();
-                    });
+                    // _sceneManager.FadeManager.SetCallBack(()=>{
+                    //     _sceneManager.StageManager.PlayerInit();
+                    // });
                     StartCoroutine(_sceneManager.FadeManager.FadeIn());
+                    _sceneManager.StageManager.PlayerInit();
+
                 });
                 StartCoroutine(_sceneManager.FadeManager.FadeOut());
                 Show(false);

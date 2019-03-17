@@ -179,7 +179,7 @@ namespace MainScene{
             // ゲームくりあ
             Debug.Log(_stageData.Count);
             if(_stageData.Count == 0){
-                _mainSceneManager.GameClearView.Show(true);
+                _mainSceneManager.GameClearView.EndAnimation();
                 _mainSceneManager.DefaultView.Show(false);
             }
             // ステージ生成
@@ -277,12 +277,22 @@ namespace MainScene{
                     fixedFallBlock.Init(this, 0.1f * blockCnt);
                     _blockList.Add(fixedFallBlock);
                     break;
+                // キャラクターゴール
+                case Common.Const.ObjectType.kCharacter:
+                    var character                     = Instantiate(_mainSceneManager.PrefabManager.CharacterPrefab, Vector3.zero, Quaternion.identity, _mainSceneManager.WorldParent).GetComponent<Character>();
+                    character.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
+                    character.Init(this, 0.1f * blockCnt);
+                    _blockList.Add(character);
+                    break;
+
                 }
                 if(_stageData[i]._type != Common.Const.ObjectType.kPlayer){
                     ++blockCnt;
                     _stageMapList[_stageData[i]._posY][_stageData[i]._posX] = (int)_stageData[i]._type;
                 }
             }
+            PlayerInit();
+
         }
 
         /// <summary>

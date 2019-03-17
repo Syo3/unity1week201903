@@ -36,6 +36,8 @@ namespace MainScene{
         private GameObject _fixedHillBlockRightPrefab;
         [SerializeField, Tooltip("固定落下ブロック")]
         private GameObject _fixedFallBlockPrefab;
+        [SerializeField, Tooltip("キャラクター")]
+        private GameObject _characterPrefab;
         #endregion
 
 
@@ -78,6 +80,9 @@ namespace MainScene{
         }
         public GameObject FixedFallBlockPrfab{
             get{return _fixedFallBlockPrefab;}
+        }
+        public GameObject CharacterPrefab{
+            get{return _characterPrefab;}
         }
         #endregion
     }

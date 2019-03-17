@@ -31,7 +31,7 @@ namespace MainScene{
             _stageManager.SceneManager.SoundManager.PlayOnShot(1);
             // アニメーションさせる
             transform.localScale = Vector3.one;
-            _animator.Play("SpringLeftUp");
+            _animator.Play("SpringLeftUp", 0, 0.0f);
         }
 
     }
