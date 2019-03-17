@@ -19,6 +19,24 @@ namespace Edit{
         private Button _blockCreateButton;
         [SerializeField, Tooltip("坂ブロック作成ボタン")]
         private Button _hillBlockCreateButton;
+        [SerializeField, Tooltip("坂ブロック左生成")]
+        private Button _hillBlockRightCreateButton;
+        [SerializeField, Tooltip("固定ブロック")]
+        private Button _fixedBlockCreateButton;
+        [SerializeField, Tooltip("スプリング生成ボタン")]
+        private Button _springCreateButton;
+        [SerializeField, Tooltip("落下ブロック生成ボタン")]
+        private Button _fallBlockCreateButton;
+        [SerializeField, Tooltip("スプリング左")]
+        private Button _springLeftCreateButton;
+        [SerializeField, Tooltip("スプリング右")]
+        private Button _springRightCraeteButton;
+        [SerializeField, Tooltip("固定坂ブロック左")]
+        private Button _fixedHillBlockLeftCreateButton;
+        [SerializeField, Tooltip("固定坂ブロック右")]
+        private Button _fixedHillBlockRightCreateButton;
+        [SerializeField, Tooltip("固定落下ブロック生成")]
+        private Button _fixedFallBlockCreateButton;
         #endregion
 
         #region private field
@@ -52,6 +70,42 @@ namespace Edit{
             // 坂ブロック作成ボタン
             _hillBlockCreateButton.onClick.AddListener(()=>{
                 _sceneManager.CreateManager.Create(Common.Const.ObjectType.kHillBlock);
+            });
+            // 坂ブロック左
+            _hillBlockRightCreateButton.onClick.AddListener(()=>{
+                _sceneManager.CreateManager.Create(Common.Const.ObjectType.kHillBlockRight);
+            });
+            // 固定ブロック
+            _fixedBlockCreateButton.onClick.AddListener(()=>{
+                _sceneManager.CreateManager.Create(Common.Const.ObjectType.kFixedBlock);
+            });
+            // スプリング
+            _springCreateButton.onClick.AddListener(()=>{
+                _sceneManager.CreateManager.Create(Common.Const.ObjectType.kSpring);
+            });
+            // 落下ブロック
+            _fallBlockCreateButton.onClick.AddListener(()=>{
+                _sceneManager.CreateManager.Create(Common.Const.ObjectType.kFallBlock);
+            });
+            // スプリング左
+            _springLeftCreateButton.onClick.AddListener(()=>{
+                _sceneManager.CreateManager.Create(Common.Const.ObjectType.kSpringLeft);
+            });
+            // スプリング右
+            _springRightCraeteButton.onClick.AddListener(()=>{
+                _sceneManager.CreateManager.Create(Common.Const.ObjectType.kSpringRight);
+            });
+            // 固定坂左
+            _fixedHillBlockLeftCreateButton.onClick.AddListener(()=>{
+                _sceneManager.CreateManager.Create(Common.Const.ObjectType.kFixedHillBlockLeft);
+            });
+            // 固定坂右
+            _fixedHillBlockRightCreateButton.onClick.AddListener(()=>{
+                _sceneManager.CreateManager.Create(Common.Const.ObjectType.kFixedHillBlockRight);
+            });
+            // 固定落下
+            _fixedFallBlockCreateButton.onClick.AddListener(()=>{
+                _sceneManager.CreateManager.Create(Common.Const.ObjectType.kFixedFallBlock);
             });
         }
         #endregion

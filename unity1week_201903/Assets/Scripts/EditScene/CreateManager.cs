@@ -39,8 +39,36 @@ namespace Edit{
             case Common.Const.ObjectType.kHillBlock:
                 prefab = _sceneManager.PrefabManager.HillBlockObjectPrefab;
                 break;
+            case Common.Const.ObjectType.kHillBlockRight:
+                prefab = _sceneManager.PrefabManager.HillBlockLeftObjectPrefab;
+                break;
+            case Common.Const.ObjectType.kFixedBlock:
+                prefab = _sceneManager.PrefabManager.FixedBlockObjectPrefab;
+                break;
+            case Common.Const.ObjectType.kSpring:
+                prefab = _sceneManager.PrefabManager.SpringObjectPrefab;
+                break;
+            case Common.Const.ObjectType.kFallBlock:
+                prefab = _sceneManager.PrefabManager.FallBlockObjectPrefab;
+                break;
+            case Common.Const.ObjectType.kSpringLeft:
+                prefab = _sceneManager.PrefabManager.SpringLeftObjectPrefab;
+                break;
+            case Common.Const.ObjectType.kSpringRight:
+                prefab = _sceneManager.PrefabManager.SpringRightObjectPrefab;
+                break;
+            case Common.Const.ObjectType.kFixedHillBlockLeft:
+                prefab = _sceneManager.PrefabManager.FixedHillBlockLeftObjectPrefab;
+                break;
+            case Common.Const.ObjectType.kFixedHillBlockRight:
+                prefab = _sceneManager.PrefabManager.FixedHillBlockRightObjectPrefab;
+                break;
+            case Common.Const.ObjectType.kFixedFallBlock:
+                prefab = _sceneManager.PrefabManager.FixedFallBlockObjectPrefab;
+                break;
             }
-            var editObject = Instantiate(prefab, Vector3.zero, Quaternion.identity, _sceneManager.WorldParent).GetComponent<EditObjectBase>();
+
+            var editObject = Instantiate(prefab, Vector3.zero, prefab.transform.rotation, _sceneManager.WorldParent).GetComponent<EditObjectBase>();
             editObject.Init(_sceneManager.EditObjectManager);
             _sceneManager.EditObjectManager.Add(editObject);
         }

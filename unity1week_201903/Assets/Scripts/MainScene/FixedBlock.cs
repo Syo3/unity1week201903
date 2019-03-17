@@ -8,6 +8,7 @@ namespace MainScene{
 
         public void Init(StageManager stageManager, float animationTime=0.0f)
         {
+            _fixedFlg   = true;
             _moveFlg    = false;
             _objectType = Common.Const.ObjectType.kFixedBlock;
             base.Init(stageManager);

@@ -22,6 +22,15 @@ namespace MainScene{
         private RetryView _retryView;
         [SerializeField, Tooltip("クリア表示")]
         private GameClearView _gameClearView;
+        [SerializeField, Tooltip("UI表示")]
+        private DefaultView _defaultView;
+        [SerializeField, Tooltip("ポーズ画面")]
+        private PauseView _pauseView;
+        [SerializeField, Tooltip("チュートらる")]
+        private TutorialView _tutorialView;
+
+        [SerializeField, Tooltip("デフォルトステージID デバッグ用")]
+        private int _stageID;
         #endregion
 
         #region private field
@@ -52,29 +61,35 @@ namespace MainScene{
         public GameClearView GameClearView{
             get{return _gameClearView;}
         }
+        public DefaultView DefaultView{
+            get{return _defaultView;}
+        }
+        public PauseView PauseView{
+            get{return _pauseView;}
+        }
+        public TutorialView TutorialView{
+            get{return _tutorialView;}
+        }
         #endregion
 
         // Use this for initialization
         void Start ()
         {
             // ステージ作成
+            _stageManager.StageID = _stageID;
             _stageManager.Init(this);
             _clearView.Init(this);
             _retryView.Init(this);
             _gameClearView.Init(this);
+            _defaultView.Init(this);
+            _pauseView.Init(this);
             _stageManager.PlayerInit();
             // フェードイン
-            _fadeManager.SetCallBack(()=>{
-            });
+            //_fadeManager.SetCallBack(()=>{
+            //});
             StartCoroutine(_fadeManager.FadeIn());
         }
         
-        // Update is called once per frame
-        void Update ()
-        {
-            
-        }
-
         #region public function
         #endregion
 

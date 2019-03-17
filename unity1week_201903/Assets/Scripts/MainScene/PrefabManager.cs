@@ -30,6 +30,12 @@ namespace MainScene{
         private GameObject _springLeftPrefab;
         [SerializeField, Tooltip("ばね右側")]
         private GameObject _springRightPrefab;
+        [SerializeField, Tooltip("固定坂ブロック左")]
+        private GameObject _fixedHillBlockLeftPrefab;
+        [SerializeField, Tooltip("固定坂ブロック右")]
+        private GameObject _fixedHillBlockRightPrefab;
+        [SerializeField, Tooltip("固定落下ブロック")]
+        private GameObject _fixedFallBlockPrefab;
         #endregion
 
 
@@ -63,6 +69,15 @@ namespace MainScene{
         }
         public GameObject SpringRightPrefab{
             get{return _springRightPrefab;}
+        }
+        public GameObject FixedHillBlockLeftPrefab{
+            get{return _fixedHillBlockLeftPrefab;}
+        }
+        public GameObject FixedHillBlockRightPrefab{
+            get{return _fixedHillBlockRightPrefab;}
+        }
+        public GameObject FixedFallBlockPrfab{
+            get{return _fixedFallBlockPrefab;}
         }
         #endregion
     }

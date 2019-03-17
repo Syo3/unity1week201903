@@ -24,8 +24,14 @@ namespace MainScene{
         /// <param name="collision"></param>
         protected void OnCollisionEnter2D(Collision2D collision)
         {
+
+            if(collision.gameObject.name.IndexOf("Player") < 0){
+                return;
+            }
+            _stageManager.SceneManager.SoundManager.PlayOnShot(1);
             // アニメーションさせる
-            _animator.Play("SpringUp");
+            transform.localScale = Vector3.one;
+            _animator.Play("SpringLeftUp");
         }
 
     }

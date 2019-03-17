@@ -26,6 +26,9 @@ namespace MainScene{
             _sceneManager = sceneManager;
             // ボタン設定
             _nextButton.onClick.AddListener(()=>{
+                if(GameObject.Find("Character") != null){
+                    Destroy(GameObject.Find("Character"));
+                }
                 // フェード
                 _sceneManager.FadeManager.SetCallBack(()=>{
                     // ステージ初期化

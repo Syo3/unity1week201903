@@ -39,6 +39,7 @@
             kSpringRight,
             kFixedHillBlockLeft,
             kFixedHillBlockRight,
+            kFixedFallBlock,
         }
 	}
 }

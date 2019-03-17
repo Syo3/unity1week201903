@@ -33,10 +33,12 @@ namespace MainScene{
         private Rigidbody2D _rigidBody;
         [SerializeField, Tooltip("風船のアニメーター")]
         private Animator _ballonAnimator;
-        // 風船のコライダー欲しいね
+        [SerializeField, Tooltip("風船コライダー")]
+        private BoxCollider2D _ballonColider;
         #endregion
 
         #region private field
+        private StageManager _stageManager;
         private bool _updateFlg;
         private bool _fallFlg;
         private bool _timeUpdateFlg;
@@ -46,6 +48,10 @@ namespace MainScene{
         private State _state;
         private float _time;
         private Vector3 _defaultPosition;
+        private float _moveVecRate;
+
+    	public Vector2 _velocity;
+    	public float _angularVelocity;
         #endregion
 
         #region access
@@ -66,13 +72,13 @@ namespace MainScene{
             _fallFlg       = false;
             _timeUpdateFlg = false;
             _framePosition = _transform.localPosition;
-
+            _moveVecRate   = 1.0f;
         }
 
 
-        public void Init()
+        public void Init(StageManager stageManager)
         {
-
+            _stageManager = stageManager;
         }
 
         // Update is called once per frame
@@ -118,6 +124,31 @@ namespace MainScene{
         }
 
         /// <summary>
+        /// ポーズ管理
+        /// </summary>
+        /// <param name="flg"></param>
+        public void Pause(bool flg)
+        {
+            if(flg){
+                _angularVelocity    = _rigidBody.angularVelocity;
+                _velocity           = _rigidBody.velocity;
+                _rigidBody.bodyType = RigidbodyType2D.Kinematic;
+                this.enabled        = false;
+            }
+            else{
+                this.enabled               = true;
+                _rigidBody.bodyType        = RigidbodyType2D.Dynamic;
+                _rigidBody.angularVelocity = _angularVelocity;
+                _rigidBody.velocity        = _velocity;
+            }
+        }
+
+        public void BallonDestroy()
+        {
+            Destroy(_ballonAnimator.gameObject);
+        }
+
+        /// <summary>
         /// 衝突開始　トリガー
         /// </summary>
         /// <param name="other"></param>
@@ -144,13 +175,46 @@ namespace MainScene{
             //     _animator.Play("Move");
             //     break;
             case State.kMove:
+                var block = collision.gameObject.GetComponent<BlockBase>();
+                switch(block.GetObjectType){
+                case Common.Const.ObjectType.kSpring:
+                    _rigidBody.AddForce(new Vector2(0.0f, 500.0f));
+                    break;
+                case Common.Const.ObjectType.kSpringLeft:
+                    _rigidBody.AddForce(new Vector2(200.0f, 400.0f));
+                    break;
+                case Common.Const.ObjectType.kSpringRight:
+                    _rigidBody.AddForce(new Vector2(-200.0f, 400.0f));
+                    break;
+                }
+                // 真横判定
+                if(collision.transform.position.y > _transform.position.y - Common.Const.BLOCK_SIZE_HALF){
+                    Debug.Log("collision horizontal");
+                    if(_moveVecRate > 0.0f){
+                        Debug.Log(collision.transform.position.x);
+                        Debug.Log(_transform.position.x);
+                        if(collision.transform.position.x > _transform.position.x){
+                            _moveVecRate *= -1.0f;
+                            var rot = _transform.eulerAngles;
+                            rot.y   = 180.0f;
+                            _transform.eulerAngles = rot;
+                        }
+                    }
+                    else{
+                        if(collision.transform.position.x < _transform.position.x){
+                            _moveVecRate *= -1.0f;
+                            var rot = _transform.eulerAngles;
+                            rot.y   = 0.0f;
+                            _transform.eulerAngles = rot;
+                        }                        
+                    }
+                }
+
+                break;
             case State.kRolling:
             case State.kGetUp:
-                var block = collision.gameObject.GetComponent<BlockBase>();
-                Debug.Log(block);
-                Debug.Log(block.GetObjectType);
-
-                switch(block.GetObjectType){
+                var checkBlock = collision.gameObject.GetComponent<BlockBase>();
+                switch(checkBlock.GetObjectType){
                 case Common.Const.ObjectType.kSpring:
                     _rigidBody.AddForce(new Vector2(0.0f, 500.0f));
                     break;
@@ -192,10 +256,13 @@ namespace MainScene{
         {
             switch(_state){
             case State.kBallon:
-                _state = State.kStartFall;
-                _rigidBody.bodyType = RigidbodyType2D.Dynamic;
+                _state                 = State.kStartFall;
+                _rigidBody.bodyType    = RigidbodyType2D.Dynamic;
+                _ballonColider.enabled = false;
                 _ballonAnimator.Play("BallonDestroy");
                 _ballonAnimator.transform.parent = _transform.parent;
+                Invoke("BallonDestroy", 5.0f);
+                _stageManager.SceneManager.TutorialView.EndTutorial();
                 break;
             }
         }
@@ -242,7 +309,7 @@ namespace MainScene{
             _framePosition = _transform.localPosition;
             // 移動
             var pos                  = _transform.localPosition;
-            pos.x                   += Common.Const.MOVE_SPEED * Time.deltaTime;
+            pos.x                   += Common.Const.MOVE_SPEED * _moveVecRate * Time.deltaTime;
             _transform.localPosition = pos;
 
         }

@@ -90,6 +90,7 @@ namespace MainScene{
         public void OnBeginDrag(PointerEventData eventData)
         {
             if(!_moveFlg || _fixedFlg){
+                StartCoroutine(MoveFalseAnimation());
                 return;
             }
             _sprite.sortingOrder = 2;
@@ -103,7 +104,6 @@ namespace MainScene{
         public void OnDrag(PointerEventData eventData)
         {
             if(!_moveFlg || _fixedFlg){
-                StartCoroutine(MoveFalseAnimation());
                 return;
             }
             // マウスの位置に動かす
@@ -147,6 +147,10 @@ namespace MainScene{
             }
             position                = new Vector3((float)_posX * Common.Const.BLOCK_SIZE + Common.Const.START_POS_X + Common.Const.BLOCK_SIZE_HALF, (float)_posY * Common.Const.BLOCK_SIZE + Common.Const.START_POS_Y + Common.Const.BLOCK_SIZE_HALF, 0.0f);
             transform.localPosition = position;
+            _stageManager.SceneManager.SoundManager.PlayOnShot(0);
+//            _stageManager.SceneManager.TutorialView.EndTutorial();
+            _stageManager.SceneManager.TutorialView.ShowDragTutorial();
+
         }
 
         /// <summary>
@@ -200,13 +204,23 @@ namespace MainScene{
             }
         }
 
+        /// <summary>
+        /// 持てなかった場合の処理
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator MoveFalseAnimation()
         {
+            _stageManager.SceneManager.SoundManager.PlayOnShot(3);
             var basePosition = transform.localPosition;
+            var yRate        = 1.0f;
+            if(!_fixedFlg){
+                yRate = 0.0f;
+            }
+
             Debug.Log(basePosition);
             for(var i = 0; i < 5; ++i){
 
-                transform.localPosition = basePosition + new Vector3(Random.Range(-0.05f, 0.05f), Random.Range(-0.05f, 0.05f), 0.0f);
+                transform.localPosition = basePosition + new Vector3(Random.Range(-0.05f, 0.05f), Random.Range(-0.05f, 0.05f) * yRate, 0.0f);
                 yield return null;
             }
             var pos = Vector3.zero;

@@ -21,6 +21,20 @@ namespace MainScene{
         private bool _failedFlg;
         #endregion
 
+        #region access
+        public MainSceneManager SceneManager{
+            get{return _mainSceneManager;}
+        }
+        public int StageID{
+            set{_stageID = value;}
+        }
+        #endregion
+
+        void Awake()
+        {
+            _stageID = 1;
+        }
+
         /// <summary>
         /// 初期設定
         /// </summary>
@@ -28,7 +42,6 @@ namespace MainScene{
         public void Init(MainSceneManager sceneManager)
         {
             _mainSceneManager = sceneManager;
-            _stageID          = 1;
             _stageMapList     = new List<List<int>>();
             for(var i = 0; i < Common.Const.NUM_HEIGHT; ++i){
 
@@ -55,7 +68,8 @@ namespace MainScene{
         public void StageClear()
         {
             ++_stageID;
-            _mainSceneManager.ClearView.Show(true);            
+            _mainSceneManager.ClearView.Show(true);       
+            _mainSceneManager.SoundManager.PlayOnShot(2);
             Invoke("ObjectFall", 1.0f);
         }
 
@@ -78,6 +92,14 @@ namespace MainScene{
         /// </summary>
         public void Reset()
         {
+            if(_stageID == 1){
+                _mainSceneManager.TutorialView.Show(true);
+            }
+            else{
+                _mainSceneManager.TutorialView.Show(false);
+            }
+
+
             DataDelete();
             _clearFlg     = false;
             _failedFlg    = false;
@@ -99,19 +121,35 @@ namespace MainScene{
         {
             Debug.Log(_playerList.Count);
             for(var i = 0; i < _playerList.Count; ++i){
-                _playerList[i].Init();
+                _mainSceneManager.SoundManager.PlayOnShot(4);
+                _playerList[i].Init(this);
             }
         }
 
         public bool CheckStageMap(int x, int y)
         {
+            if(y < 0 || x < 0 || y >= _stageMapList.Count || x >= _stageMapList[y].Count){
+                return false;
+            }
             return _stageMapList[y][x] == 0;
         }
 
         public void SetStageMap(int beforeX, int beforeY, int afterX, int afterY)
         {
             _stageMapList[beforeY][beforeX] = 0;
-            _stageMapList[afterY][afterX]   = 1;
+            if(afterY < 0 || afterX < 0 || afterY >= _stageMapList.Count || afterX >= _stageMapList[afterY].Count){
+                _stageMapList[beforeY][beforeX]   = 1;
+            }
+            else{
+                _stageMapList[afterY][afterX]   = 1;
+            }
+        }
+    
+        public void PlayerPause(bool flg)
+        {
+            for(var i = 0; i < _playerList.Count; ++i){
+                _playerList[i].Pause(flg);
+            }
         }
 
         /// <summary>
@@ -142,6 +180,7 @@ namespace MainScene{
             Debug.Log(_stageData.Count);
             if(_stageData.Count == 0){
                 _mainSceneManager.GameClearView.Show(true);
+                _mainSceneManager.DefaultView.Show(false);
             }
             // ステージ生成
             for(var i = 0; i < _stageData.Count; ++i){
@@ -203,7 +242,6 @@ namespace MainScene{
                     fallBlock.Init(this, 0.1f * blockCnt);
                     _blockList.Add(fallBlock);
                     break;
-
                 // スプリング左
                 case Common.Const.ObjectType.kSpringLeft:
                     var springLeft                    = Instantiate(_mainSceneManager.PrefabManager.SpringLeftPrefab, Vector3.zero, Quaternion.identity, _mainSceneManager.WorldParent).GetComponent<SpringHorizontal>();
@@ -217,6 +255,27 @@ namespace MainScene{
                     springRight.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
                     springRight.Init(this, 0.1f * blockCnt);
                     _blockList.Add(springRight);
+                    break;
+                // 固定坂左
+                case Common.Const.ObjectType.kFixedHillBlockLeft:
+                    var fixedHillLeft                     = Instantiate(_mainSceneManager.PrefabManager.FixedHillBlockLeftPrefab, Vector3.zero, Quaternion.identity, _mainSceneManager.WorldParent).GetComponent<FixedHillBlock>();
+                    fixedHillLeft.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
+                    fixedHillLeft.Init(this, 0.1f * blockCnt);
+                    _blockList.Add(fixedHillLeft);
+                    break;
+                // 固定坂右
+                case Common.Const.ObjectType.kFixedHillBlockRight:
+                    var fixedHillRight                    = Instantiate(_mainSceneManager.PrefabManager.FixedHillBlockRightPrefab, Vector3.zero, Quaternion.Euler(0.0f ,180.0f, 0.0f), _mainSceneManager.WorldParent).GetComponent<FixedHillBlock>();
+                    fixedHillRight.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
+                    fixedHillRight.Init(this, 0.1f * blockCnt);
+                    _blockList.Add(fixedHillRight);
+                    break;
+                // 固定落下ブロック
+                case Common.Const.ObjectType.kFixedFallBlock:
+                    var fixedFallBlock                    = Instantiate(_mainSceneManager.PrefabManager.FixedFallBlockPrfab, Vector3.zero, Quaternion.identity, _mainSceneManager.WorldParent).GetComponent<FixedFallBlock>();
+                    fixedFallBlock.transform.localPosition = GetObjectInitPosition(_stageData[i]._posX, _stageData[i]._posY);
+                    fixedFallBlock.Init(this, 0.1f * blockCnt);
+                    _blockList.Add(fixedFallBlock);
                     break;
                 }
                 if(_stageData[i]._type != Common.Const.ObjectType.kPlayer){

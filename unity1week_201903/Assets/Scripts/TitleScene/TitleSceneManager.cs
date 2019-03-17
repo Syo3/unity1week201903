@@ -11,24 +11,29 @@ namespace TitleScene{
         private FadeManager _fadeManager;
         [SerializeField, Tooltip("スタートボタン")]
         private Button _startButton;
+        [SerializeField, Tooltip("")]
+        private Character _character;
+        [SerializeField, Tooltip("CanvasGroup")]
+        private CanvasGroup _canvasGroup;
         #endregion
 
         // Use this for initialization
         void Start ()
         {
+            _character.Init(this);
             _startButton.onClick.AddListener(()=>{
-                _fadeManager.SetCallBack(()=>{
-                    UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
-                });
-                StartCoroutine(_fadeManager.FadeOut());
+                // _fadeManager.SetCallBack(()=>{
+                //     UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
+                // });
+                // StartCoroutine(_fadeManager.FadeOut());
+                DontDestroyOnLoad(_character);
+                _character.GameStart();
+                _canvasGroup.alpha = 0.0f;
+
             });
             StartCoroutine(_fadeManager.FadeIn());
         }
         
-        // Update is called once per frame
-        void Update ()
-        {
-            
-        }
+        
     }
 }

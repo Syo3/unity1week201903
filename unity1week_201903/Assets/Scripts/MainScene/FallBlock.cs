@@ -33,6 +33,9 @@ namespace MainScene{
         /// <param name="collision"></param>
         protected void OnCollisionExit2D(Collision2D collision)
         {
+            if(collision.gameObject.GetComponent<Player>() == null){
+                return;
+            }
             _fixedFlg = true;
             _fallFlg  = true;
             _rigidBody.bodyType       = RigidbodyType2D.Dynamic;
